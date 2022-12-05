@@ -1,0 +1,24 @@
+[Unit]
+Description = Flying Duck service (Arrow Flight Server with DuckDB).
+After = syslog.target network.target remote-fs.target docker.service <%= @local_dependencies %>
+Requires = docker.service <%= @local_dependencies %>
+
+[Service]
+ExecStartPre=/bin/bash -c 'source <%= node['consul']['bin_dir']%>/domain_utils.sh'
+ExecStart = /usr/bin/docker run --rm --name %n \
+           -v <%= node['flyingduck']['home'] %>:/flyingduck \
+           -v <%= node['flyingduck']['data_volume']['root_dir']%>:<%= node['flyingduck']['data_volume']['root_dir']%> \
+           -v <%= @crypto_dir %>:/certs \
+           -p <%= node['flyingduck']['monitoring'] %>:<%= node['flyingduck']['monitoring'] %> \
+           --network=host \
+           -e FLYINGDUCK_HOME=/flyingduck \
+           docker.hops.works/flyingduck:<%= node['flyingduck']['version'] %> \
+           -e NAMENODE_IP=<%= @nn_fqdn %>
+	   
+ExecStop = /usr/bin/docker stop %n 
+
+Restart = on-failure
+RestartSec = 2
+
+[Install]
+WantedBy = multi-user.target

@@ -1,0 +1,5 @@
+dependencies:
+  - recipe: flyingduck::default
+    global:
+      - hopsworks::default
+      - consul::slave

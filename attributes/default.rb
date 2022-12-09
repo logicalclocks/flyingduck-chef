@@ -2,7 +2,7 @@
 #include_attribute "ndb"
 include_attribute "hops"
 
-default['flyingduck']['version']                = "1.3.1"
+default['flyingduck']['version']                = "3.1.0-SNAPSHOT"
 default['flyingduck']['download_url']           = "#{node['download_url']}/flyingduck/#{node['flyingduck']['version']}/flyingduck.tgz"
 
 default['flyingduck']['user']                   = "flyingduck"

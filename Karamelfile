@@ -1,5 +1,6 @@
 dependencies:
   - recipe: flyingduck::default
     global:
+      - kagent::default
       - hopsworks::default
       - consul::slave

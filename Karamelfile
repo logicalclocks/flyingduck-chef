@@ -2,5 +2,6 @@ dependencies:
   - recipe: flyingduck::default
     global:
       - kagent::default
-      - hopsworks::default
+      - hops::docker_registry
+      - onlinefs 
       - consul::slave

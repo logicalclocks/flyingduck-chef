@@ -137,7 +137,7 @@ ruby_block 'generate-api-key' do
 
     api_key_params = {
       :name => "flyingduck_" + SecureRandom.hex(12),
-      :scope => "KAFKA"
+      :scope => "FEATURESTORE"
     }
 
     http = Net::HTTP.new(url.host, url.port)
@@ -283,7 +283,7 @@ end
 
 # Register with consul
 if service_discovery_enabled()
-  # Register online fs with Consul
+  # Register flyingduck with Consul
   consul_service "Registering Flyingduck with Consul" do
     service_definition "flyingduck.hcl.erb"
     action :register

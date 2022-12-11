@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flyingduck>
-  <service>
-    <threadNumber><%= node['flyingduck']['service']['thread_number'] %></threadNumber>
-  </service>
 
   <hops>
-    <namenodeServers><%= @nn_fqdn %>:<%= node['hops']['namenode']['port'] %></namenodeServers>
+    <namenodeServers><%= @nn_fqdn %>:<%= node['hops']['nn']['port'] %></namenodeServers>
     <trustStoreLocation>/certs/flyingduck__tstore.jks</trustStoreLocation>
     <keyStoreLocation>/certs/flyingduck__kstore.jks</keyStoreLocation>
     <keyLocation>/certs/flyingduck__passwd</keyLocation>

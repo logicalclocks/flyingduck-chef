@@ -254,7 +254,7 @@ if exists_local("hops", "nn")
   local_systemd_dependencies += " namenode.service"
 end
 
-hadoop_dir = node['hops']['base_dir']
+hops_dir = node['hops']['base_dir']
 spark_dir = node['hadoop_spark']['base_dir']
 anaconda_dir = node['conda']['base_dir']
 
@@ -271,7 +271,7 @@ template systemd_script do
     :crypto_dir => crypto_dir,
     :nn_fqdn => nn_fqdn,
     :spark_dir => spark_dir,
-    :hadoop_dir => hadoop_dir,
+    :hops_dir => hadoop_dir,
     :anaconda_dir => anaconda_dir,
     :my_host => service_fqdn,    
     :local_dependencies => local_systemd_dependencies

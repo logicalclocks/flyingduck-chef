@@ -1,6 +1,6 @@
-#include_attribute "kkafka"
-#include_attribute "ndb"
+include_attribute "conda"
 include_attribute "hops"
+include_attribute "hadoop_spark"
 
 default['flyingduck']['version']                = "3.1.0-SNAPSHOT"
 default['flyingduck']['download_url']           = "#{node['download_url']}/flyingduck/#{node['flyingduck']['version']}/flyingduck.tgz"

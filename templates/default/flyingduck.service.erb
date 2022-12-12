@@ -5,20 +5,19 @@ Requires = docker.service <%= @local_dependencies %>
 
 [Service]
 ExecStartPre=/bin/bash -c 'source <%= node['consul']['bin_dir']%>/domain_utils.sh'
-ExecStart = /usr/bin/docker run \
-#--rm --name %n \
+ExecStart = /usr/bin/docker run \ #--rm 
       --name %n \
-# flying-duck-instance \
       --runtime "runc" \
       --detach \
-      --volume "/srv/hops/super_crypto/hdfs:/srv/hops/super_crypto/hdfs" \
-      --volume "/srv/hops/hadoop/etc/hadoop:/srv/hops/hadoop/etc/hadoop:ro" \
-      --volume "/srv/hops/spark:/srv/hops/spark:ro" \
+      --volume "<%= @crypto_dir %>/hdfs:/srv/hops/super_crypto/hdfs" \
+      --volume "<% @hadoop_dir %>/etc/hadoop:/srv/hops/hadoop/etc/hadoop:ro" \
+      --volume "<% @spark_dir %>:/srv/hops/spark:ro" \
+      --volume "<% @anaconda_dir %>/envs/theenv:/srv/hops/anaconda/envs/theenv" \      
       --volume "<%= @crypto_dir %>:/certs" \
       --volume "$PWD/logs:/usr/src/app/logs" \
       --volume <%= node['flyingduck']['data_volume']['root_dir']%>:<%= node['flyingduck']['data_volume']['root_dir']%> \
       --network "host" \
-      --hostname "hopsworks0.logicalclocks.com" \
+      --hostname "<% @my_host %>" \  #hopsworks0.logicalclocks.com" \
       --env "PATH=/srv/hops/anaconda/envs/theenv/bin:/srv/hops/anaconda/bin:/srv/hops/hadoop/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
       --env "LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/amd64/server:/srv/hops/hadoop/lib/native:/srv/hops/anaconda/envs/theenv/lib" \
       --env "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64" \

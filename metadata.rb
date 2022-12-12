@@ -10,6 +10,7 @@ recipe "flyingduck::default", "Configures the Hopsworks online feature store ser
 
 depends 'ndb'
 depends 'hops'
+depends 'hadoop_spark'
 depends 'kagent'
 depends 'consul'
 

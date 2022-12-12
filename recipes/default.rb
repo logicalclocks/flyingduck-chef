@@ -254,7 +254,7 @@ if exists_local("hops", "nn")
   local_systemd_dependencies += " namenode.service"
 end
 
-hadoop_dir = node['hadoop']['base_dir']
+hadoop_dir = node['hops']['base_dir']
 spark_dir = node['hadoop_spark']['base_dir']
 anaconda_dir = node['conda']['base_dir']
 

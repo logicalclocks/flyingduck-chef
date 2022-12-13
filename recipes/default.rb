@@ -271,7 +271,7 @@ template systemd_script do
     :crypto_dir => crypto_dir,
     :nn_fqdn => nn_fqdn,
     :spark_dir => spark_dir,
-    :hops_dir => hadoop_dir,
+    :hops_dir => hops_dir,
     :anaconda_dir => anaconda_dir,
     :my_host => service_fqdn,    
     :local_dependencies => local_systemd_dependencies

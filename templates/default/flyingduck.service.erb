@@ -11,7 +11,7 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       --volume "<%= @crypto_dir %>:/srv/hops/super_crypto/hdfs" \
       --volume "<%= @hops_dir %>/etc/hadoop:/srv/hops/hadoop/etc/hadoop:ro" \
       --volume "<%= @spark_dir %>:/srv/hops/spark:ro" \
-      --volume "<%= @anaconda_dir %>/envs/theenv:/srv/hops/anaconda/envs/theenv" \      
+      --volume "<%= @anaconda_dir %>/envs/theenv:/srv/hops/anaconda/envs/theenv" \
       --volume "<%= @crypto_dir %>:/certs" \
       --volume "<%= node['flyingduck']['data_volume']['root_dir'] %>/logs:/usr/src/app/logs" \
       --volume <%= node['flyingduck']['data_volume']['root_dir']%>:<%= node['flyingduck']['data_volume']['root_dir']%> \

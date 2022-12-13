@@ -15,11 +15,11 @@ depends 'kagent'
 depends 'consul'
 
 attribute "flyingduck/user",
-          :description => "User to run the online feature store service",
+          :description => "Unix user to store flyingduck data",
           :type => "string"
 
 attribute "flyingduck/user_id",
-          :description => "flyingduck user id. Default: 1521",
+          :description => "flyingduck user id",
           :type => "string"
 
 attribute "flyingduck/group",
@@ -27,11 +27,15 @@ attribute "flyingduck/group",
           :type => "string"
 
 attribute "flyingduck/group_id",
-          :description => "flyingduck group id. Default: 1516",
+          :description => "flyingduck group id",
           :type => "string"
 
 attribute "flyingduck/monitoring",
           :description => "Port on which the monitoring page is available",
+          :type => "string"
+
+attribute "flyingduck/port",
+          :description => "Port on which AFS listens. Default: 5005",
           :type => "string"
 
 attribute "flyingduck/download_url",

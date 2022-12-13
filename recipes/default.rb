@@ -202,7 +202,7 @@ template "#{node['flyingduck']['etc']}/flyingduck-site.xml" do
   variables(
     {
       :nn_fqdn => nn_fqdn,
-#      :mgm_fqdn => mgm_fqdn
+      :nn_port => node['hops']['nn']['port']
     }
   )
 end

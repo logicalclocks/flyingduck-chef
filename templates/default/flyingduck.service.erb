@@ -16,8 +16,7 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       --volume "<%= node['flyingduck']['data_volume']['root_dir'] %>/logs:/usr/src/app/logs" \
       --volume <%= node['flyingduck']['data_volume']['root_dir']%>:<%= node['flyingduck']['data_volume']['root_dir']%> \
       --network "host" \
-      --hostname "hopsworks0.logicalclocks.com" \  
-#     --hostname "<%= @my_host %>" \
+      --hostname "<%= @my_host %>" \
       --env "PATH=/srv/hops/anaconda/envs/theenv/bin:/srv/hops/anaconda/bin:/srv/hops/hadoop/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
       --env "LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/amd64/server:/srv/hops/hadoop/lib/native:/srv/hops/anaconda/envs/theenv/lib" \
       --env "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64" \
@@ -30,11 +29,9 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       --env "BASE_DIR=/srv/hops" \
       --env "FLYINGDUCK_HOME=/flyingduck" \
       --env "NAMENODE_IP=<%= @nn_fqdn %>" \
-      flying-duck-image
-      # TODO - change docker image name to line below from "flying-duck-image"
-#      docker.hops.works/flyingduck:<%= node['flyingduck']['version'] %>
-#           -p <%= node['flyingduck']['monitoring'] %>:<%= node['flyingduck']['monitoring'] %> \
-#           -v <%= node['flyingduck']['home'] %>:/flyingduck \
+      --env "NAMENODE_PORT=<%= @nn_port %>" \
+      -p <%= node['flyingduck']['port'] %>:<%= node['flyingduck']['port'] %> \
+      docker.hops.works/flyingduck:<%= node['flyingduck']['version'] %>
 
 	   
 ExecStop = /usr/bin/docker stop %n 

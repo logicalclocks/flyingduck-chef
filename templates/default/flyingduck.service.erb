@@ -7,6 +7,9 @@ Requires = docker.service <%= @local_dependencies %>
 # Uncomment line below if flyingduck is running on the head node
 #ExecStartPre=/bin/bash -c 'source /srv/hops/consul/bin/domain_utils.sh && _is_service_ready "glassfish-domain1" "hopsworks.service.consul"'
 
+MemoryHigh=<%= node['flyingduck']['memory_high_mbs'] %>
+MemoryMax=<%= node['flyingduck']['memory_max_mbs'] %>
+
 ExecStart = /usr/bin/docker run --rm --name %n \
       --volume "<%= @crypto_dir %>:/srv/hops/super_crypto/hdfs" \
       --volume "<%= @hops_dir %>/etc/hadoop:/srv/hops/hadoop/etc/hadoop:ro" \

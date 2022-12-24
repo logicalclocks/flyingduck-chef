@@ -30,10 +30,15 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       --env "C_INCLUDE_PATH=/srv/hops/anaconda/envs/theenv/include" \
       --env "CPLUS_INCLUDE_PATH=/srv/hops/anaconda/envs/theenv/include" \
       --env "BASE_DIR=/srv/hops" \
-      --env "FLYINGDUCK_HOME=/flyingduck" \
       --env "NAMENODE_IP=<%= @nn_fqdn %>" \
       --env "NAMENODE_PORT=<%= @nn_port %>" \
-      --env "MEMORY_GBS=<%= node['flyingduck']['memory_high_gbs'] %>" \
+      --env "FLYINGDUCK_HOME=/flyingduck" \
+      --env "FLYINGDUCK_TMP_DIR=<%= node['flyingduck']['tmp_dir'] %>" \
+      --env "FLYINGDUCK_MEMORY_GBS=<%= node['flyingduck']['memory_high_gbs'] %>" \
+      --env "FLYINGDUCK_PORT=<%= node['flyingduck']['port'] %>" \
+      --env "FLYINGDUCK_FQDN=<%= @my_host %>" \
+      --env "FLYINGDUCK_REQ_TIMEOUT=<%= node['flyingduck']['request_timeout_sec'] %>" \
+      --env "FLYINGDUCK_BATCH_SIZE=<%= node['flyingduck']['batch_size'] %>" \
       -p <%= node['flyingduck']['port'] %>:<%= node['flyingduck']['port'] %> \
       docker.hops.works/flyingduck:<%= node['flyingduck']['version'] %>
 

@@ -15,11 +15,16 @@ default['flyingduck']['home']                   = "#{node['install']['dir']}/fly
 default['flyingduck']['etc']                    = "#{node['flyingduck']['home']}/etc"
 default['flyingduck']['logs']                   = "#{node['flyingduck']['home']}/logs"
 default['flyingduck']['token']                  = "#{node['flyingduck']['etc']}/token"
+default['flyingduck']['tmp_dir']                = "/tmp/duckdb"
 
 # Systemd Service Memory limits
 default['flyingduck']['memory_high_gbs']        = "16"
 # Oversubscribed memory limit
 default['flyingduck']['memory_max_gbs']         = "20"
+
+# Configuration parameters 
+default['flyingduck']['request_timeout_sec']    = "600"
+default['flyingduck']['batch_size']             = "65536"
 
 # Data volume directories
 default['flyingduck']['data_volume']['root_dir']  = "#{node['data']['dir']}/flyingduck"

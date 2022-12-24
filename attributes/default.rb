@@ -17,8 +17,9 @@ default['flyingduck']['logs']                   = "#{node['flyingduck']['home']}
 default['flyingduck']['token']                  = "#{node['flyingduck']['etc']}/token"
 
 # Systemd Service Memory limits
-default['flyingduck']['memory_high_mbs']        = "8000"
-default['flyingduck']['memory_max_mbs']         = "12000"
+default['flyingduck']['memory_high_gbs']        = "16"
+# Oversubscribed memory limit
+default['flyingduck']['memory_max_gbs']         = "20"
 
 # Data volume directories
 default['flyingduck']['data_volume']['root_dir']  = "#{node['data']['dir']}/flyingduck"

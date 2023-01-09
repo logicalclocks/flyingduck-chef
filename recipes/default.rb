@@ -102,7 +102,7 @@ end
 instance_id = private_recipe_ips("flyingduck", "default").sort.find_index(my_private_ip())
 service_fqdn = consul_helper.get_service_fqdn("flyingduck")
 
-crypto_dir = x509_helper.get_crypto_dir(node['flyingduck']['user'])
+crypto_dir = x509_helper.get_crypto_dir(node['hops']['hdfs']['user'])
 kagent_hopsify "Generate x.509" do
   user node['flyingduck']['user']
   crypto_directory crypto_dir

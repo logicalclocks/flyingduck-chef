@@ -223,12 +223,17 @@ remote_file "#{Chef::Config['file_cache_path']}/#{base_filename}" do
 end
 
 # Load the Docker image
+registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/flyingduck:#{node['flyingduck']['version']}"
+image_name = "docker.hops.works/flyingduck:#{node['flyingduck']['version']}"
 bash "import_image" do
   user "root"
   code <<-EOF
+    set -e
     docker load -i #{Chef::Config['file_cache_path']}/#{base_filename}
+    docker tag #{image_name} #{registry_image}
+    docker push #{registry_image}
   EOF
-  not_if "docker image inspect docker.hops.works/flyingduck:#{node['flyingduck']['version']}"
+  not_if "docker image inspect #{registry_image}"
 end
 
 # Add Systemd unit file

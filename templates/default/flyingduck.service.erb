@@ -24,6 +24,7 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       --env "LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/amd64/server:/srv/hops/hadoop/lib/native:/srv/hops/anaconda/envs/theenv/lib" \
       --env "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64" \
       --env "HADOOP_HOME=/srv/hops/hadoop" \
+      --env "HADOOP_CONF_DIR=/srv/hops/hadoop/etc/hadoop" \
       --env "HADOOP_USER_NAME=hdfs" \
       --env "MATERIAL_DIRECTORY=/usr/src/app/certificates" \
       --env "BASE_ENV=/srv/hops/anaconda/envs/theenv" \

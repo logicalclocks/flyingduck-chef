@@ -44,7 +44,7 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       docker.hops.works/flyingduck:<%= node['flyingduck']['version'] %>
 
 	   
-ExecStop = /usr/bin/docker stop %n 
+ExecStop = /usr/bin/docker stop flyingduck.service
 
 Restart = on-failure
 RestartSec = 2

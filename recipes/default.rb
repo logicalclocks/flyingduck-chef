@@ -276,6 +276,7 @@ template systemd_script do
   variables({
     :crypto_dir => crypto_dir,
     :nn_fqdn => nn_fqdn,
+    :nn_port => node['hops']['nn']['port'],
     :spark_dir => spark_dir,
     :hops_dir => hops_dir,
     :anaconda_dir => anaconda_dir,

@@ -17,6 +17,14 @@ user node['flyingduck']['user'] do
   not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
 
+
+## Start - in case flying duck is not on the same server as the NameNode, create HDFS user + crypto
+## This host must also install at least hops::client
+
+include_recipe "hops::hdfs_user"
+
+## End - in case flying duck is not on the same server as the NameNode, create HDFS user + crypto
+
 group node['logger']['group'] do
   gid node['logger']['group_id']
   action :create
@@ -37,6 +45,13 @@ end
 group node['flyingduck']['group'] do
   append true
   members [node['logger']['user']]
+  not_if { node['install']['external_users'].casecmp("true") == 0 }
+end
+
+group node['hops']['secure_group'] do
+  action :modify
+  members node['flyingduck']['user']
+  append true
   not_if { node['install']['external_users'].casecmp("true") == 0 }
 end
 
@@ -99,18 +114,22 @@ end
 }
 
 # Generate a certificate
-instance_id = private_recipe_ips("flyingduck", "default").sort.find_index(my_private_ip())
+#instance_id = private_recipe_ips("flyingduck", "default").sort.find_index(my_private_ip())
 #service_fqdn = consul_helper.get_service_fqdn("flyingduck")
-service_fqdn = node['fqdn']
+#service_fqdn = node['fqdn']
 
+service_fqdn = "hopsworks"
 crypto_dir = x509_helper.get_crypto_dir(node['hops']['hdfs']['user'])
-kagent_hopsify "Generate x.509" do
-  user node['hops']['hdfs']['user']
-  crypto_directory crypto_dir
-  common_name "#{instance_id}.#{service_fqdn}"
-  action :generate_x509
-  not_if { node["kagent"]["enabled"] == "false" }
-end
+
+# crypto_dir = x509_helper.get_crypto_dir(node['flyingduck']['user'])
+# kagent_hopsify "Generate x.509" do
+#   user node['flyingduck']['user']
+#   crypto_directory crypto_dir
+# #  common_name "#{instance_id}.#{service_fqdn}"
+#   common_name service_fqdn
+#   action :generate_x509
+#   not_if { node["kagent"]["enabled"] == "false" }
+# end
 
 # Generate an API key
 api_key = nil

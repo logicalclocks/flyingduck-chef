@@ -115,8 +115,8 @@ end
 
 # Generate a certificate
 #instance_id = private_recipe_ips("flyingduck", "default").sort.find_index(my_private_ip())
-#service_fqdn = consul_helper.get_service_fqdn("flyingduck")
-service_fqdn = node['fqdn']
+#service_fqdn = node['fqdn']
+service_fqdn = consul_helper.get_service_fqdn("namenode")
 
 crypto_dir = x509_helper.get_crypto_dir(node['hops']['hdfs']['user'])
 

@@ -8,8 +8,8 @@ Requires = docker.service <%= @local_dependencies %>
 #ExecStartPre=/bin/bash -c 'source /srv/hops/consul/bin/domain_utils.sh && _is_service_ready "glassfish-domain1" "hopsworks.service.consul"'
 
 # TODO - would like systemd to limit amount of memory for Docker, but maybe this could be done in Docker itself?
+# This does not work
 #MemoryHigh=<%= node['flyingduck']['memory_high_gbs'] %>
-#MemoryMax=<%= node['flyingduck']['memory_max_gbs'] %>
 
 ExecStart = /usr/bin/docker run --rm --name %n \
       --volume "<%= @crypto_dir %>:/srv/hops/super_crypto/hdfs" \

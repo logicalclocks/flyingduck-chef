@@ -41,3 +41,39 @@ attribute "flyingduck/port",
 attribute "flyingduck/download_url",
           :description => "Download url for the flyingduck.tgz binaries",
           :type => "string"
+
+
+attribute "flyingduck/memory_high_gbs",
+          :description => "Upper Memory limit for FlyingDuck service.",
+          :type => "string"
+
+
+attribute "flyingduck/request_timeout_sec",
+          :description => "Client will wait for this timeout in seconds for requests, after which an exception is thrown if no response.",
+          :type => "string"
+
+attribute "flyingduck/batch_size",
+          :description => "Size of batches retrieved from Parquet files. Higher is higher throughput, but also higher latency",
+          :type => "string"
+
+attribute "flyingduck/data_volume/root_dir",
+          :description => "Path to store data. Defaults to /srv/hops/hopsworks-data/flyingduck",
+          :type => "string"
+
+attribute "flyingduck/data_volume/etc_dir",
+          :description => "Path to store config files. Defaults to flyingduck/etc",
+          :type => "string"
+
+attribute "flyingduck/data_volume/logs_dir",
+          :description => "Path to store config files. Defaults to flyingduck/logs",
+          :type => "string"
+
+attribute "flyingduck/hopsworks/email",
+          :description => "Email address",
+          :type => "string"
+
+attribute "flyingduck/hopsworks/password",
+          :description => "Password for email address",
+          :type => "string"
+
+

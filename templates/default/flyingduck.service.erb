@@ -9,7 +9,7 @@ Requires = docker.service <%= @local_dependencies %>
 
 # TODO - would like systemd to limit amount of memory for Docker, but maybe this could be done in Docker itself?
 # This does not work
-#MemoryHigh=<%= node['flyingduck']['memory_high_gbs'] %>
+#MemoryHigh=<%= node['flyingduck']['memory_gbs'] %>
 
 ExecStart = /usr/bin/docker run --rm --name %n \
       --volume "<%= @crypto_dir %>:/srv/hops/super_crypto/hdfs" \
@@ -36,7 +36,7 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       --env "NAMENODE_PORT=<%= @nn_port %>" \
       --env "FLYINGDUCK_HOME=/flyingduck" \
       --env "FLYINGDUCK_TMP_DIR=<%= node['flyingduck']['tmp_dir'] %>" \
-      --env "FLYINGDUCK_MEMORY_GBS=<%= node['flyingduck']['memory_high_gbs'] %>" \
+      --env "FLYINGDUCK_MEMORY_GBS=<%= node['flyingduck']['memory_gbs'] %>" \
       --env "FLYINGDUCK_PORT=<%= node['flyingduck']['port'] %>" \
       --env "FLYINGDUCK_FQDN=<%= @flyingduck_fqdn %>" \
       --env "FLYINGDUCK_REQ_TIMEOUT=<%= node['flyingduck']['request_timeout_sec'] %>" \

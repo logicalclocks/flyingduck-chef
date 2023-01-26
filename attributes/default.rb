@@ -18,7 +18,7 @@ default['flyingduck']['token']                  = "#{node['flyingduck']['etc']}/
 default['flyingduck']['tmp_dir']                = "/tmp/duckdb"
 
 # Max amount of memory to use in DuckDB. Reduce for a test VM.
-default['flyingduck']['memory_high_gbs']        = "16"
+default['flyingduck']['memory_gbs']             = "16"
 
 # Configuration parameters 
 default['flyingduck']['request_timeout_sec']    = "600"

@@ -43,7 +43,7 @@ attribute "flyingduck/download_url",
           :type => "string"
 
 
-attribute "flyingduck/memory_high_gbs",
+attribute "flyingduck/memory_gbs",
           :description => "Upper Memory limit for FlyingDuck service.",
           :type => "string"
 

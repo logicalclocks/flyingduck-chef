@@ -238,10 +238,11 @@ bash "import_image" do
   code <<-EOF
     set -e
     docker load -i #{Chef::Config['file_cache_path']}/#{base_filename}
-    docker tag #{image_name} #{registry_image}
-    docker push #{registry_image}
+    #docker tag #{image_name} #{registry_image}
+    #docker push #{registry_image}
   EOF
-  not_if "docker image inspect #{registry_image}"
+  #not_if "docker image inspect #{registry_image}"
+  not_if "docker image inspect docker.hops.works/flyingduck:#{node['flyingduck']['version']}"
 end
 
 # Add Systemd unit file

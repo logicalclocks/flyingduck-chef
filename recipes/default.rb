@@ -114,21 +114,10 @@ end
 }
 
 # Generate a certificate
-#instance_id = private_recipe_ips("flyingduck", "default").sort.find_index(my_private_ip())
 #service_fqdn = node['fqdn']
 service_fqdn = consul_helper.get_service_fqdn("namenode")
 
 crypto_dir = x509_helper.get_crypto_dir(node['hops']['hdfs']['user'])
-
-# crypto_dir = x509_helper.get_crypto_dir(node['flyingduck']['user'])
-# kagent_hopsify "Generate x.509" do
-#   user node['flyingduck']['user']
-#   crypto_directory crypto_dir
-# #  common_name "#{instance_id}.#{service_fqdn}"
-#   common_name service_fqdn
-#   action :generate_x509
-#   not_if { node["kagent"]["enabled"] == "false" }
-# end
 
 # Generate an API key
 api_key = nil
@@ -236,10 +225,10 @@ end
 # Download and load the Docker image
 image_url = node['flyingduck']['download_url']
 base_filename = File.basename(image_url)
-remote_file "#{Chef::Config['file_cache_path']}/#{base_filename}" do
-  source image_url
-  action :create
-end
+# remote_file "#{Chef::Config['file_cache_path']}/#{base_filename}" do
+#   source image_url
+#   action :create
+# end
 
 # Load the Docker image
 registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/flyingduck:#{node['flyingduck']['version']}"

@@ -300,7 +300,7 @@ end
 # Register with kagent
 if node['kagent']['enabled'] == "true"
   kagent_config service_name do
-    service "feature store"
+    service "flyingduck"
   end
 end
 

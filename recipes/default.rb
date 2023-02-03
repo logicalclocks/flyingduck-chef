@@ -227,8 +227,10 @@ image_url = node['flyingduck']['download_url']
 base_filename = File.basename(image_url)
 
 # Load the Docker image
-registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/flyingduck:#{node['flyingduck']['version']}"
-image_name = "docker.hops.works/flyingduck:#{node['flyingduck']['version']}"
+#registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/flyingduck:#{node['flyingduck']['version']}"
+registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/flyingduck"
+#image_name = "docker.hops.works:4443/flyingduck:#{node['flyingduck']['version']}"
+image_name = "flyingduck:#{node['flyingduck']['version']}"
 bash "import_image" do
   user "root"
   code <<-EOF

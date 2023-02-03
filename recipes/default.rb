@@ -222,18 +222,13 @@ template "#{node['flyingduck']['etc']}/log4j.properties" do
   mode 0750
 end
 
-# Download and load the Docker image
+# Docker image already downloaded in install.rb
 image_url = node['flyingduck']['download_url']
 base_filename = File.basename(image_url)
-# remote_file "#{Chef::Config['file_cache_path']}/#{base_filename}" do
-#   source image_url
-#   action :create
-# end
 
 # Load the Docker image
 registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/flyingduck:#{node['flyingduck']['version']}"
-#image_name = "docker.hops.works/flyingduck:#{node['flyingduck']['version']}"
-image_name = "flyingduck:#{node['flyingduck']['version']}"
+image_name = "docker.hops.works/flyingduck:#{node['flyingduck']['version']}"
 bash "import_image" do
   user "root"
   code <<-EOF

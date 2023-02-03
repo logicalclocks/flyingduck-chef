@@ -289,7 +289,8 @@ template systemd_script do
     :hops_dir => hops_dir,
     :anaconda_dir => anaconda_dir,
     :flyingduck_fqdn => service_fqdn,    
-    :local_dependencies => local_systemd_dependencies
+    :local_dependencies => local_systemd_dependencies,
+    :registry_image => registry_image
   })
 end
 

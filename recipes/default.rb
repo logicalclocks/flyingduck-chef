@@ -232,7 +232,8 @@ base_filename = File.basename(image_url)
 
 # Load the Docker image
 registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/flyingduck:#{node['flyingduck']['version']}"
-image_name = "docker.hops.works/flyingduck:#{node['flyingduck']['version']}"
+#image_name = "docker.hops.works/flyingduck:#{node['flyingduck']['version']}"
+image_name = "flyingduck:#{node['flyingduck']['version']}"
 bash "import_image" do
   user "root"
   code <<-EOF
@@ -241,8 +242,7 @@ bash "import_image" do
     docker tag #{image_name} #{registry_image}
     docker push #{registry_image}
   EOF
-  #not_if "docker image inspect #{registry_image}"
-  not_if "docker image inspect docker.hops.works/flyingduck:#{node['flyingduck']['version']}"
+  not_if "docker image inspect #{registry_image}"
 end
 
 # Add Systemd unit file

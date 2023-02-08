@@ -35,7 +35,7 @@ attribute "flyingduck/monitoring",
           :type => "string"
 
 attribute "flyingduck/port",
-          :description => "Port on which AFS listens. Default: 5005",
+          :description => "Port on which AFS listens. Default: 5006",
           :type => "string"
 
 attribute "flyingduck/download_url",

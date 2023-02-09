@@ -305,8 +305,8 @@ end
 # Register with consul
 if service_discovery_enabled()
   # Register flyingduck with Consul
-  consul_service "Registering Flyingduck with Consul" do
-    service_definition "flyingduck.hcl.erb"
-    action :register
-  end
+  #consul_service "Registering Flyingduck with Consul" do
+  #  service_definition "flyingduck.hcl.erb"
+  #  action :register
+  #end
 end

@@ -7,15 +7,13 @@ default['flyingduck']['download_url']           = "#{node['download_url']}/flyin
 default['flyingduck']['port']                   = 5005
 
 default['flyingduck']['user']                   = "flyingduck"
-default['flyingduck']['user_id']                = '1793'
+default['flyingduck']['user_id']                = '1525'
 default['flyingduck']['group']                  = "flyingduck"
-default['flyingduck']['group_id']               = '1794'
+default['flyingduck']['group_id']               = '1520'
 
 default['flyingduck']['home']                   = "#{node['install']['dir']}/flyingduck"
 default['flyingduck']['etc']                    = "#{node['flyingduck']['home']}/etc"
 default['flyingduck']['logs']                   = "#{node['flyingduck']['home']}/logs"
-default['flyingduck']['token']                  = "#{node['flyingduck']['etc']}/token"
-default['flyingduck']['tmp_dir']                = "/tmp/duckdb"
 
 # Max amount of memory to use in DuckDB. Reduce for a test VM.
 default['flyingduck']['memory_gbs']             = "16"

@@ -2,17 +2,6 @@ services = [
     {
         id = "flyingduck/metrics"
         name = "flyingduck"
-        tags = [
-            "monitoring"
-        ]
         port = <%= node['flyingduck']['port'] %>
-        check = {
-            id = "flyingduck-check"
-            name = "Health check for Online feature store"
-            http = "http://localhost:<%= node['flyingduck']['port'] %>/"
-            interval = "20s"
-            timeout = "20s"
-            status = "passing"
-        }
     }
 ]

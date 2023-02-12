@@ -1,49 +1,29 @@
 [Unit]
 Description = Flying Duck service (Arrow Flight Server with DuckDB).
-After = syslog.target network.target remote-fs.target docker.service <%= @local_dependencies %>
+After = syslog.target network.target docker.service <%= @local_dependencies %>
 Requires = docker.service <%= @local_dependencies %>
 
 [Service]
-# Uncomment line below if flyingduck is running on the head node
-#ExecStartPre=/bin/bash -c 'source /srv/hops/consul/bin/domain_utils.sh && _is_service_ready "glassfish-domain1" "hopsworks.service.consul"'
-
-# TODO - would like systemd to limit amount of memory for Docker, but maybe this could be done in Docker itself?
-# This does not work
-#MemoryHigh=<%= node['flyingduck']['memory_gbs'] %>
-
 ExecStart = /usr/bin/docker run --rm --name %n \
-      --volume "<%= @crypto_dir %>:/srv/hops/super_crypto/hdfs" \
-      --volume "<%= @hops_dir %>/etc/hadoop:/srv/hops/hadoop/etc/hadoop:ro" \
-      --volume "<%= @spark_dir %>:/srv/hops/spark:ro" \
-      --volume "<%= @anaconda_dir %>/envs/theenv:/srv/hops/anaconda/envs/theenv" \
-      --volume "<%= @crypto_dir %>:/certs" \
-      --volume "<%= node['flyingduck']['data_volume']['root_dir'] %>/logs:/usr/src/app/logs" \
-      --volume <%= node['flyingduck']['data_volume']['root_dir']%>:<%= node['flyingduck']['data_volume']['root_dir']%> \
-      --network "host" \
+      --memory=<%= node['flyingduck']['memory_gbs'] %>G \
       --hostname "0.0.0.0" \
-      --env "PATH=/srv/hops/anaconda/envs/theenv/bin:/srv/hops/anaconda/bin:/srv/hops/hadoop/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
-      --env "LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/amd64/server:/srv/hops/hadoop/lib/native:/srv/hops/anaconda/envs/theenv/lib" \
-      --env "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64" \
-      --env "HADOOP_HOME=/srv/hops/hadoop" \
-      --env "HADOOP_CONF_DIR=/srv/hops/hadoop/etc/hadoop" \
-      --env "HADOOP_USER_NAME=hdfs" \
-      --env "MATERIAL_DIRECTORY=/usr/src/app/certificates" \
-      --env "BASE_ENV=/srv/hops/anaconda/envs/theenv" \
-      --env "C_INCLUDE_PATH=/srv/hops/anaconda/envs/theenv/include" \
-      --env "CPLUS_INCLUDE_PATH=/srv/hops/anaconda/envs/theenv/include" \
+      --network "host" \
+      --volume "<%= @crypto_dir %>:/srv/hops/super_crypto/flyingduck" \
+      --volume "<%= node['hops']['conf_dir_parent'] %>/logs:/srv/hops/hadoop/etc" \
+      --volume "<%= node['flyingduck']['log_dir'] %>/logs:/usr/src/app/logs" \
+      --env "HADOOP_USER_NAME=flyingduck" \
       --env "BASE_DIR=/srv/hops" \
-      --env "NAMENODE_IP=<%= @nn_fqdn %>" \
-      --env "NAMENODE_PORT=<%= @nn_port %>" \
-      --env "FLYINGDUCK_HOME=/flyingduck" \
-      --env "FLYINGDUCK_TMP_DIR=<%= node['flyingduck']['tmp_dir'] %>" \
-      --env "FLYINGDUCK_MEMORY_GBS=<%= node['flyingduck']['memory_gbs'] %>" \
-      --env "FLYINGDUCK_PORT=<%= node['flyingduck']['port'] %>" \
-      --env "FLYINGDUCK_FQDN=<%= @flyingduck_fqdn %>" \
-      --env "FLYINGDUCK_REQ_TIMEOUT=<%= node['flyingduck']['request_timeout_sec'] %>" \
-      --env "FLYINGDUCK_BATCH_SIZE=<%= node['flyingduck']['batch_size'] %>" \
-      <%= @registry_image %>
+      <%= @registry_image %> \  
+      python src/server.py \
+            --nn-host=<%= @nn_fqdn %> \
+            --nn-port=<%= node['hops']['nn']['port'] %> \
+            --memory_limit=<%= node['flyingduck']['memory_gbs'] %> \
+            --tmp_dir=/tmp/duckdb \
+            --request_queue_timeout=<%= node['flyingduck']['request_timeout_sec'] %> \
+            --query_result_batch_size=<%= node['flyingduck']['batch_size'] %> \
+            --fqdn=<%= @flyingduck_fqdn %> \
+            --port=<%= node['flyingduck']['port'] %>
 
-	   
 ExecStop = /usr/bin/docker stop flyingduck.service
 
 Restart = on-failure

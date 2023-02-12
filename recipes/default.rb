@@ -67,7 +67,6 @@ link node['flyingduck']['logs'] do
 end
 
 # Generate a certificate
-nn_fqdn = consul_helper.get_service_fqdn("namenode")
 flyingduck_fqdn = consul_helper.get_service_fqdn("flyingduck")
 
 crypto_dir = x509_helper.get_crypto_dir(node['flyingduck']['user'])
@@ -79,7 +78,7 @@ kagent_hopsify "Generate x.509" do
   not_if { node["kagent"]["enabled"] == "false" }
 end
 
-Docker image already downloaded in install.rb
+# Docker image already downloaded in install.rb
 image_url = node['flyingduck']['download_url']
 base_filename = File.basename(image_url)
 remote_file "#{Chef::Config['file_cache_path']}/#{base_filename}" do
@@ -132,7 +131,6 @@ template systemd_script do
   end
   variables({
     :crypto_dir => crypto_dir,
-    :nn_fqdn => nn_fqdn,
     :flyingduck_fqdn => flyingduck_fqdn,
     :local_dependencies => local_systemd_dependencies,
     :registry_image => registry_image

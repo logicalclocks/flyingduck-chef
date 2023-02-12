@@ -1,4 +1,4 @@
-onlinefs-chef
+flyingduck-chef
 =============
 
-Chef cooknook to configure the online feature store service 
+Chef cookbook for the installation of Flying Duck (Arrow Flight Server with DuckDB)

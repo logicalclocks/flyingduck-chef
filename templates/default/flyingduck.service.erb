@@ -11,7 +11,7 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       --volume "<%= @crypto_dir %>:/srv/hops/super_crypto/flyingduck" \
       --volume "<%= node['hops']['conf_dir_parent'] %>:/srv/hops/hadoop/etc" \
       --volume "<%= node['flyingduck']['logs'] %>:/usr/src/app/logs" \
-      --env "HADOOP_USER_NAME=flyingduck" \
+      --env "HADOOP_USER_NAME=<%= node['flyingduck']['user'] %>" \
       --env "BASE_DIR=/srv/hops" \
       --env "LIBHDFS_OPTS=-Dlog4j.configurationFile=/srv/hops/hadoop/etc/hadoop/log4j2.properties -Dhadoop.log.dir=/tmp -Dhadoop.root.logger=ERROR,console" \
       <%= @registry_image %> python src/server.py \

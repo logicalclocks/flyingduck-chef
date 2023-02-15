@@ -3,7 +3,7 @@ include_attribute "hops"
 include_attribute "hadoop_spark"
 
 default['flyingduck']['version']                = node['install']['version']
-default['flyingduck']['download_url']           = "#{node['download_url']}/flyingduck/#{node['flyingduck']['version']}/flyingduck.tgz"
+default['flyingduck']['download_url']           = "#{node['install']['enterprise']['download_url']}/flyingduck/#{node['flyingduck']['version']}/flyingduck.tgz"
 default['flyingduck']['port']                   = 5005
 
 default['flyingduck']['user']                   = "flyingduck"

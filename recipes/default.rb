@@ -83,6 +83,8 @@ image_url = node['flyingduck']['download_url']
 base_filename = File.basename(image_url)
 remote_file "#{Chef::Config['file_cache_path']}/#{base_filename}" do
   source image_url
+  headers get_ee_basic_auth_header()
+  sensitive true
   action :create
 end
 

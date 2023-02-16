@@ -85,6 +85,7 @@ template "#{node['flyingduck']['etc']}/logging_config.cfg" do
   owner node['flyingduck']['user']
   group node['flyingduck']['group']
   mode 0750
+end
 
 # Generate a certificate
 flyingduck_fqdn = consul_helper.get_service_fqdn("flyingduck")

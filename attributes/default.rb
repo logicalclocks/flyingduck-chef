@@ -13,6 +13,7 @@ default['flyingduck']['group_id']               = '1520'
 
 default['flyingduck']['home']                   = "#{node['install']['dir']}/flyingduck"
 default['flyingduck']['logs']                   = "#{node['flyingduck']['home']}/logs"
+default['flyingduck']['etc']                    = "#{node['flyingduck']['home']}/etc"
 
 # Max amount of memory to use in DuckDB. Reduce for a test VM.
 default['flyingduck']['memory_gbs']             = "16"
@@ -24,3 +25,4 @@ default['flyingduck']['batch_size']             = "65536"
 # Data volume directories
 default['flyingduck']['data_volume']['root_dir']  = "#{node['data']['dir']}/flyingduck"
 default['flyingduck']['data_volume']['logs_dir']  = "#{node['flyingduck']['data_volume']['root_dir']}/logs"
+default['flyingduck']['data_volume']['etc_dir']  = "#{node['flyingduck']['data_volume']['root_dir']}/etc"

@@ -59,11 +59,25 @@ directory node['flyingduck']['data_volume']['logs_dir'] do
   action :create
 end
 
+directory node['flyingduck']['data_volume']['etc_dir'] do
+  owner node['flyingduck']['user']
+  group node['flyingduck']['group']
+  mode "0750"
+  action :create
+end
+
 link node['flyingduck']['logs'] do
   owner node['flyingduck']['user']
   group node['flyingduck']['group']
   mode "0750"
   to node['flyingduck']['data_volume']["logs_dir"]
+end
+
+link node['flyingduck']['etc'] do
+  owner node['flyingduck']['user']
+  group node['flyingduck']['group']
+  mode "0750"
+  to node['flyingduck']['data_volume']["etc_dir"]
 end
 
 # Generate a certificate

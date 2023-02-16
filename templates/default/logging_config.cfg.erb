@@ -1,0 +1,21 @@
+[loggers]
+keys=root
+
+[handlers]
+keys=rotating_file
+
+[formatters]
+keys=simple
+
+[logger_root]
+# change to WARN in production
+level=INFO
+handlers=rotating_file
+
+[handler_rotating_file]
+class=logging.handlers.RotatingFileHandler
+formatter=simple
+args=('logs/flyingduck.log', 'a', 100000000, 5)
+
+[formatter_simple]
+format=%(asctime)s %(levelname)s %(funcName)s(%(lineno)d) %(message)s

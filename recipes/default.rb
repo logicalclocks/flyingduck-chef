@@ -80,6 +80,12 @@ link node['flyingduck']['etc'] do
   to node['flyingduck']['data_volume']["etc_dir"]
 end
 
+template "#{node['flyingduck']['etc']}/logging_config.cfg" do
+  source "logging_config.cfg.erb"
+  owner node['flyingduck']['user']
+  group node['flyingduck']['group']
+  mode 0750
+
 # Generate a certificate
 flyingduck_fqdn = consul_helper.get_service_fqdn("flyingduck")
 

@@ -5,6 +5,7 @@ include_attribute "hadoop_spark"
 default['flyingduck']['version']                = node['install']['version']
 default['flyingduck']['download_url']           = "#{node['install']['enterprise']['download_url']}/flyingduck/#{node['flyingduck']['version']}/flyingduck.tgz"
 default['flyingduck']['port']                   = 5005
+default['flyingduck']['monitoring']             = 12810
 
 default['flyingduck']['user']                   = "flyingduck"
 default['flyingduck']['user_id']                = '1525'

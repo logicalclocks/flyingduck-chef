@@ -87,6 +87,13 @@ template "#{node['flyingduck']['etc']}/logging_config.cfg" do
   mode 0750
 end
 
+template "#{node['flyingduck']['etc']}/flyingduck-site.xml" do
+  source "flyingduck-site.xml.erb"
+  owner node['flyingduck']['user']
+  group node['flyingduck']['group']
+  mode 0750
+end
+
 # Generate a certificate
 flyingduck_fqdn = consul_helper.get_service_fqdn("flyingduck")
 

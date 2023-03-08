@@ -3,15 +3,15 @@
 
   <hops>
     <namenodeServers><%= @nn_fqdn %>:<%= node['hops']['nn']['port'] %></namenodeServers>
-    <trustStoreLocation>/certs/flyingduck__tstore.jks</trustStoreLocation>
-    <keyStoreLocation>/certs/flyingduck__kstore.jks</keyStoreLocation>
-    <keyLocation>/certs/flyingduck__passwd</keyLocation>
+    <trustStoreLocation>/certs/<%= node['flyingduck']['user'] %>__tstore.jks</trustStoreLocation>
+    <keyStoreLocation>/certs/<%= node['flyingduck']['user'] %>__kstore.jks</keyStoreLocation>
+    <keyLocation>/certs/<%= node['flyingduck']['user'] %>__passwd</keyLocation>
   </hops>
-  
+
   <hopsworks>
-    <tokenLocation>/flyingduck/etc/token</tokenLocation>
+    <tokenLocation><%= node['flyingduck']['etc'] %>/token</tokenLocation>
   </hopsworks>
-  
+
   <metrics>
     <port><%= node['flyingduck']['monitoring'] %></port>
   </metrics>

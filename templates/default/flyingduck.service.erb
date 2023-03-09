@@ -15,6 +15,7 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       --env "HADOOP_USER_NAME=<%= node['flyingduck']['user'] %>" \
       --env "BASE_DIR=/srv/hops" \
       --env "LIBHDFS_OPTS=-Dlog4j.configurationFile=/srv/hops/hadoop/etc/hadoop/log4j2.properties -Dhadoop.log.dir=/tmp -Dhadoop.root.logger=ERROR,console" \
+      --port <%= node['flyingduck']['monitoring'] %>:<%= node['flyingduck']['monitoring'] %> \
       <%= @registry_image %> python src/server.py \
             --memory_limit=<%= node['flyingduck']['memory_gbs'] %> \
             --request_queue_timeout=<%= node['flyingduck']['request_timeout_sec'] %> \

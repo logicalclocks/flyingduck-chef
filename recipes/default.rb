@@ -99,6 +99,16 @@ kagent_hopsify "Generate x.509" do
   not_if { node["kagent"]["enabled"] == "false" }
 end
 
+# If deployed on managed with kagent disabled, create flyingduck crypo dir
+if node['install']['managed_docker_registry'].casecmp?("true") and node["kagent"]["enabled"].casecmp?("false")
+  kagent_hopsify "Create flyingduck crypto directory" do
+    user node['flyingduck']['user']
+    crypto_directory crypto_dir
+    common_name flyingduck_fqdn 
+    action :create_user_directory
+  end
+end 
+
 # Docker image already downloaded in install.rb
 image_url = node['flyingduck']['download_url']
 base_filename = File.basename(image_url)
@@ -110,18 +120,30 @@ remote_file "#{Chef::Config['file_cache_path']}/#{base_filename}" do
 end
 
 # Load the Docker image
-registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/flyingduck:#{node['flyingduck']['version']}"
 image_name = "flyingduck:#{node['flyingduck']['version']}"
 bash "import_image" do
   user "root"
   code <<-EOF
     set -e
     docker load -i #{Chef::Config['file_cache_path']}/#{base_filename}
-    docker tag #{image_name} #{registry_image}
-    docker push #{registry_image}
   EOF
-  not_if "docker image inspect #{registry_image}"
+  not_if "docker image inspect #{image_name}"
 end
+
+# Push to local registry 
+registry_image = image_name
+if node['install']['managed_docker_registry'].casecmp?("false")
+  registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/flyingduck:#{node['flyingduck']['version']}"
+  bash "push_to_registry" do
+    user "root"
+    code <<-EOF
+      set -e
+      docker tag #{image_name} #{registry_image}
+      docker push #{registry_image}
+    EOF
+    not_if "docker image inspect #{registry_image}"
+  end
+end 
 
 # Add Systemd unit file
 service_name="flyingduck"
@@ -165,10 +187,9 @@ kagent_config "#{service_name}" do
 end
 
 # Register with kagent
-if node['kagent']['enabled'] == "true"
-  kagent_config service_name do
-    service "flyingduck"
-  end
+kagent_config service_name do
+  service "flyingduck"
+  restart_agent node["kagent"]["enabled"].casecmp?("true")
 end
 
 # Register with consul
@@ -176,6 +197,7 @@ if service_discovery_enabled()
   # Register flyingduck with Consul
   consul_service "Registering Flyingduck with Consul" do
     service_definition "flyingduck.hcl.erb"
+    reload_consul node['install']['managed_docker_registry'].casecmp?("false")
     action :register
   end
 end

@@ -99,8 +99,9 @@ kagent_hopsify "Generate x.509" do
   not_if { node["kagent"]["enabled"] == "false" }
 end
 
+managed_docker_in_the_cloud = node['install']['managed_docker_registry'].casecmp?("true") and !node['install']['cloud'].empty? 
 # If deployed on managed with kagent disabled, create flyingduck crypo dir
-if node['install']['managed_docker_registry'].casecmp?("true") and node["kagent"]["enabled"].casecmp?("false")
+if managed_docker_in_the_cloud and node["kagent"]["enabled"].casecmp?("false")
   kagent_hopsify "Create flyingduck crypto directory" do
     user node['flyingduck']['user']
     crypto_directory crypto_dir
@@ -132,7 +133,7 @@ end
 
 # Push to local registry 
 registry_image = image_name
-if node['install']['managed_docker_registry'].casecmp?("false")
+if !managed_docker_in_the_cloud
   registry_image = "#{consul_helper.get_service_fqdn("registry")}:#{node['hops']['docker']['registry']['port']}/flyingduck:#{node['flyingduck']['version']}"
   bash "push_to_registry" do
     user "root"
@@ -197,7 +198,7 @@ if service_discovery_enabled()
   # Register flyingduck with Consul
   consul_service "Registering Flyingduck with Consul" do
     service_definition "flyingduck.hcl.erb"
-    reload_consul node['install']['managed_docker_registry'].casecmp?("false")
+    reload_consul !managed_docker_in_the_cloud
     action :register
   end
 end

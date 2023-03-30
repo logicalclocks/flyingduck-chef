@@ -4,8 +4,10 @@ After = syslog.target network.target docker.service <%= @local_dependencies %>
 Requires = docker.service <%= @local_dependencies %>
 
 [Service]
+Environment=FLYINGDUCK_MEMORY=<%= node['flyingduck']['memory_gbs'] %>
+Environment=FLYINGDUCK_CPU_LIMIT=
 ExecStart = /usr/bin/docker run --rm --name %n \
-      --memory=<%= node['flyingduck']['memory_gbs'] %>G \
+      --memory=${FLYINGDUCK_MEMORY}G ${FLYINGDUCK_CPU_LIMIT} \
       --hostname "0.0.0.0" \
       --network "host" \
       --volume "<%= @crypto_dir %>:/srv/hops/super_crypto/flyingduck" \
@@ -16,7 +18,7 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       --env "BASE_DIR=/srv/hops" \
       --env "LIBHDFS_OPTS=-Dlog4j.configurationFile=/srv/hops/hadoop/etc/hadoop/log4j2.properties -Dhadoop.log.dir=/tmp -Dhadoop.root.logger=ERROR,console" \
       <%= @registry_image %> python src/server.py \
-            --memory_limit=<%= node['flyingduck']['memory_gbs'] %> \
+            --memory_limit=${FLYINGDUCK_MEMORY} \
             --request_queue_timeout=<%= node['flyingduck']['request_timeout_sec'] %> \
             --query_result_batch_size=<%= node['flyingduck']['batch_size'] %> \
             --fqdn=<%= @flyingduck_fqdn %> \

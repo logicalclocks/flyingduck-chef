@@ -10,7 +10,7 @@ ExecStart = /usr/bin/docker run --rm --name %n \
       --memory=${FLYINGDUCK_MEMORY}G ${FLYINGDUCK_CPU_LIMIT} \
       --hostname "0.0.0.0" \
       --network "host" \
-	  --publish <%= node['flyingduck']['monitoring'] %>:<%= node['flyingduck']['monitoring'] %> \
+      --publish <%= node['flyingduck']['monitoring'] %>:<%= node['flyingduck']['monitoring'] %> \
       --volume "<%= @crypto_dir %>:/srv/hops/super_crypto/flyingduck" \
       --volume "<%= node['hops']['conf_dir_parent'] %>:/srv/hops/hadoop/etc" \
       --volume "<%= node['flyingduck']['logs'] %>:/usr/src/app/logs" \

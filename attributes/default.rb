@@ -18,6 +18,7 @@ default['flyingduck']['etc']                    = "#{node['flyingduck']['home']}
 
 # Max amount of memory to use in DuckDB. Reduce for a test VM.
 default['flyingduck']['memory_gbs']             = "16"
+default['flyingduck']['cpus']                   = "4"
 
 # Configuration parameters 
 default['flyingduck']['request_timeout_sec']    = "600"

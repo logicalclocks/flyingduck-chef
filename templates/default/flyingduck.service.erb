@@ -5,10 +5,10 @@ Requires = docker.service <%= @local_dependencies %>
 
 [Service]
 Environment=FLYINGDUCK_MEMORY=<%= node['flyingduck']['memory_gbs'] %>
-Environment=FLYINGDUCK_CPU_LIMIT=<%= node['flyingduck']['memory_gbs'] %>
+Environment=FLYINGDUCK_CPUS=<%= node['flyingduck']['cpus'] %>
 ExecStart = /usr/bin/docker run --rm --name %n \
       --memory=${FLYINGDUCK_MEMORY}G \
-      --cpus=${FLYINGDUCK_CPU_LIMIT} \
+      --cpus=${FLYINGDUCK_CPUS} \
       --hostname "0.0.0.0" \
       --network "host" \
       --volume "<%= @crypto_dir %>:/srv/hops/super_crypto/flyingduck" \

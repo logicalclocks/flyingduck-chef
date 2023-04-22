@@ -47,6 +47,9 @@ attribute "flyingduck/memory_gbs",
           :description => "Upper Memory limit for FlyingDuck service.",
           :type => "string"
 
+attribute "flyingduck/cpus",
+          :description => "Number of CPUs the FlyingDuck service can use.",
+          :type => "string"
 
 attribute "flyingduck/request_timeout_sec",
           :description => "Client will wait for this timeout in seconds for requests, after which an exception is thrown if no response.",

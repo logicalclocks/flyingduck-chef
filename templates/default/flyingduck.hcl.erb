@@ -10,8 +10,8 @@ services = [
             id = "flyingduck-check"
             name = "Health check for flyingduck"
             http = "http://localhost:<%= node['flyingduck']['monitoring'] %>/metrics"
-            interval = "20s"
-            timeout = "20s"
+            interval = "180s"
+            timeout = "180s"
             status = "passing"
         }
     }

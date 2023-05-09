@@ -88,13 +88,12 @@ template "#{node['flyingduck']['etc']}/logging_config.cfg" do
 end
 
 # Generate a certificate
-flyingduck_fqdn = consul_helper.get_service_fqdn("flyingduck")
+flyingduck_fqdn = node["fqdn"]
 
 crypto_dir = x509_helper.get_crypto_dir(node['flyingduck']['user'])
 kagent_hopsify "Generate x.509" do
   user node['flyingduck']['user']
   crypto_directory crypto_dir
-  common_name flyingduck_fqdn 
   action :generate_x509
   not_if { node["kagent"]["enabled"] == "false" }
 end
@@ -105,7 +104,6 @@ if managed_docker_in_the_cloud and node["kagent"]["enabled"].casecmp?("false")
   kagent_hopsify "Create flyingduck crypto directory" do
     user node['flyingduck']['user']
     crypto_directory crypto_dir
-    common_name flyingduck_fqdn 
     action :create_user_directory
   end
 end 

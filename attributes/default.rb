@@ -2,7 +2,7 @@ include_attribute "conda"
 include_attribute "hops"
 include_attribute "hadoop_spark"
 
-default['flyingduck']['version']                = node['install']['version']
+default['flyingduck']['version']                = "3.4.0" 
 default['flyingduck']['download_url']           = "#{node['install']['enterprise']['download_url']}/flyingduck/#{node['flyingduck']['version']}/flyingduck.tgz"
 default['flyingduck']['port']                   = 5005
 default['flyingduck']['monitoring']             = 12810

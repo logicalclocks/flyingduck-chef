@@ -14,5 +14,17 @@ services = [
             timeout = "20s"
             status = "passing"
         }
+    },
+    {
+        id = "flyingduck/server"
+        name = "flyingduck"
+        tags = [
+            "server"
+        ]
+        port = <%= node['flyingduck']['port'] %>
+        check = {
+            id = "flyingduck-server-check"
+            alias_service = "flyingduck/metrics"
+        }
     }
 ]

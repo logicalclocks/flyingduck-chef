@@ -22,5 +22,9 @@ services = [
             "server"
         ]
         port = <%= node['flyingduck']['port'] %>
+        check = {
+            id = "flyingduck-server-check"
+            alias_service = "flyingduck/metrics"
+        }
     }
 ]

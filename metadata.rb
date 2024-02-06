@@ -4,7 +4,7 @@ maintainer_email  'info@logicalclocks.com'
 license           'GPLv3'
 description       'Installs/Configures the Hopsworks online feature store service'
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version           "3.7.0"
+version           "3.8.0"
 
 recipe "flyingduck::default", "Configures the Hopsworks online feature store service"
 
